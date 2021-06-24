@@ -1,7 +1,6 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 require("dotenv/config");
 
@@ -12,8 +11,10 @@ app.use(express.json());
 //Insert Routes
 const userController = require("./controllers/userController");
 const answerController = require("./controllers/answerController");
+const questionController = require("./controllers/questionController");
 app.use("/users", userController);
 app.use("/answers", answerController);
+app.use("/questions", questionController);
 //Connect to db
 mongoose.connect(
   process.env.DB_CONNECTION,
@@ -28,6 +29,6 @@ app.get("/", (req, res) => {
   res.send("ok");
 });
 
-app.listen(process.env.PORT, () => {
+app.listen(process.env.PORT | 5000, () => {
   console.log("Server is running...");
 });
