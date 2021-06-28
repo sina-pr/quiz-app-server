@@ -1,7 +1,7 @@
 const mongodb = require("mongoose");
 
 const answerSchema = mongodb.Schema({
-  userName: { type: String, required: true },
+  email: { type: String, required: true },
   answers: { type: Array, default: [] },
   created: { type: Date, default: Date.now },
 });
