@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const auth = require("../../authentication/auth");
 
 exports.registerUser = (req, res) => {
-  User.exists({ userName: req.body.userName }, (err, result) => {
+  User.exists({ email: req.body.email }, (err, result) => {
     if (err) {
       return res.status(400).json(err);
     } else {
@@ -11,7 +11,7 @@ exports.registerUser = (req, res) => {
         return res.status(400).json({
           statusCode: 400,
           status: false,
-          message: "userName address is already taken",
+          message: "email address is already taken",
         });
       } else {
         const salt = bcrypt.genSaltSync(10);
@@ -25,7 +25,7 @@ exports.registerUser = (req, res) => {
           }
 
           const newUser = new User({
-            userName: req.body.userName,
+            email: req.body.email,
             phoneNumber: req.body.phoneNumber,
             passwordHash: hash,
           });
@@ -53,12 +53,12 @@ exports.registerUser = (req, res) => {
 };
 
 exports.loginUser = (req, res) => {
-  User.findOne({ userName: req.body.userName }).then((user) => {
+  User.findOne({ email: req.body.email }).then((user) => {
     if (user === null) {
       return res.status(404).json({
         statusCode: 404,
         status: false,
-        message: "Incorrect user name or password",
+        message: "Incorrect email or password",
       });
     }
 
@@ -78,7 +78,7 @@ exports.loginUser = (req, res) => {
           return res.status(401).json({
             statusCode: 401,
             status: false,
-            message: "Incorrect user name or password",
+            message: "Incorrect email or password",
           });
         }
       });

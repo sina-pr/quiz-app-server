@@ -1,7 +1,7 @@
 const Answer = require("./answerSchema");
 exports.saveAnswer = (req, res) => {
   newAnswer = new Answer({
-    userName: req.body.userName,
+    email: req.body.email,
     answers: req.body.answers,
   });
   newAnswer.save().then(() => {
